@@ -11,34 +11,21 @@ const model = genAI.getGenerativeModel({
     }
 });
 
-async function generateSummary(userPrompt) {
+async function generateText(payload) {
   try {
-    const requestPayload = {
-      contents: [
-        {
-          role: 'user',
-          parts: [
-            {
-              text: userPrompt
-            }
-          ]
-        }
-      ],
-    };
-
-    const apiResponse = await model.generateContent(requestPayload);
+    const apiResponse = await model.generateContent(payload);
 
     const result = apiResponse.response?.candidates[0]?.content?.parts[0]?.text;
 
     if (!result) {
-      throw new Error('Failed to generate a valid summary.');
+      throw new Error('Failed to generate a valid text.');
     }
 
     return result;
   } catch (error) {
-    console.error('Error in generateSummary:', error.message);
-    throw new Error('An error occurred while generating the summary.');
+    console.error('Error in generateText:', error.message);
+    throw new Error('An error occurred while generating the text.');
   }
 }
 
-module.exports = { generateSummary };
+module.exports = { generateText };
