@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generate Podcast Script</title>
+</head>
+<body>
+  <h1>Generate Podcast Script</h1>
+
+  <form action="/api/podcast" method="POST" id="podcastForm">
+    <label for="topic">Topic of Podcast:</label>
+    <input type="text" id="topic" name="topic" required>
+
+    <label for="maleHostName">Male Host Name:</label>
+    <input type="text" id="maleHostName" name="maleHostName" required>
+
+    <label for="maleHostPersonality">Male Host Personality:</label>
+    <input type="text" id="maleHostPersonality" name="maleHostPersonality" required>
+
+    <label for="femaleHostName">Female Host Name:</label>
+    <input type="text" id="femaleHostName" name="femaleHostName" required>
+
+    <label for="femaleHostPersonality">Female Host Personality:</label>
+    <input type="text" id="femaleHostPersonality" name="femaleHostPersonality" required>
+
+    <label for="length">Length of Podcast (in minutes):</label>
+    <input type="number" id="length" name="length" required min="1">
+
+    <button type="submit">Generate Script</button>
+  </form>
+
+  <% if (script) { %>
+    <div id="podcast-script">
+      <h3>Generated Podcast Script</h3>
+      <pre><%= script %></pre>
+    </div>
+  <% } %>
+
+</body>
+</html>

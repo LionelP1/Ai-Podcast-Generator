@@ -10,6 +10,15 @@ app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: false }));
 
+const podcastRoutes = require('./routes/podcastRoute');
+
+app.get('/', (req, res) => {
+    res.render('index', { script: [] });
+});
+
+
+app.use('/api/podcast', podcastRoutes);
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
