@@ -49,21 +49,22 @@ async function processDialogues(dialogues, silenceDuration = 0.5) {
   return combinedAudioBuffer;
 }
 
-
-async function createPodcast() {
-  const outputFile = 'journey_podcast.mp3';
-
+async function createPodcast(outputFile, dialogues) {
   try {
-    const combinedAudioBuffer = await synthesizeAndMerge(dialogues);
+    console.log('Processing dialogues...');
+    const combinedAudioBuffer = await processDialogues(dialogues);
 
+    console.log(`Saving podcast to file: ${outputFile}`);
     await fs.writeFile(outputFile, combinedAudioBuffer);
-    console.log(`Podcast saved as: ${outputFile}`);
+
+    console.log(`Podcast saved successfully as: ${outputFile}`);
   } catch (error) {
-    console.error('Error creating podcast:', error);
+    console.error('Error creating podcast:', error.message);
   }
 }
 
-createPodcast();
+const outputFile = 'journey_podcast.mp3';
+createPodcast(outputFile, dialogues);
 
 
 
