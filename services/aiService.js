@@ -11,6 +11,9 @@ const model = genAI.getGenerativeModel({
     }
 });
 
+
+
+
 async function generateText(payload) {
   try {
     const apiResponse = await model.generateContent(payload);
