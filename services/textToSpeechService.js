@@ -19,7 +19,7 @@ const dialogues = [
   { text: "That’s a poetic touch, isn’t it? What’s remarkable is how international collaboration is shaping Artemis. The European Space Agency, Canada, Japan—they’re all on board. It’s like a global effort to push humanity into the cosmos.", voice: 'en-US-Journey-D' },
   ];
 
-async function singleTextToSpeech(text, voice) {
+async function textToSpeech(text, voice) {
   const request = {
     input: { text },
     voice: { languageCode: voice.slice(0, 5), name: voice },
@@ -30,10 +30,40 @@ async function singleTextToSpeech(text, voice) {
   return Buffer.from(response.audioContent, 'binary');
 }
 
+//Creates a silence which will be used after each dialog
 function createSilence(durationSeconds, sampleRate = 24000) {
   const silenceSamples = Math.floor(durationSeconds * sampleRate);
   return Buffer.alloc(silenceSamples, 0);
 }
+
+//Convert dialog to audio and combine them
+async function processDialogues(dialogues, silenceDuration = 0.5) {
+  const silenceBuffer = createSilence(silenceDuration);
+  let combinedAudioBuffer = Buffer.alloc(0);
+
+  for (const dialogue of dialogues) {
+    const audioBuffer = await textToSpeech(dialogue.text, dialogue.voice);
+    combinedAudioBuffer = Buffer.concat([combinedAudioBuffer, audioBuffer, silenceBuffer]);
+  }
+
+  return combinedAudioBuffer;
+}
+
+
+async function createPodcast() {
+  const outputFile = 'journey_podcast.mp3';
+
+  try {
+    const combinedAudioBuffer = await synthesizeAndMerge(dialogues);
+
+    await fs.writeFile(outputFile, combinedAudioBuffer);
+    console.log(`Podcast saved as: ${outputFile}`);
+  } catch (error) {
+    console.error('Error creating podcast:', error);
+  }
+}
+
+createPodcast();
 
 
 
