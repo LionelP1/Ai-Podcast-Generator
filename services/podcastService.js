@@ -41,19 +41,32 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
 
   `;
 
-  const payload = {
-    contents: [
-      {
-        role: 'user',
-        parts: [
-          {
-            text: promptText
-          }
-        ]
-      }
-    ],
-  };
+    const payload = {
+      contents: [
+        {
+          role: 'user',
+          parts: [
+            {
+              text: promptText
+            }
+          ]
+        }
+      ],
+    };
 
+    try {
+      //Generate dialog
+
+      //Add the newly generated dialog to the history
+
+      //Use modular arithmetic to get the next speaker index
+
+      // Update word count and break if limit is exceeded
+    
+    } catch (error) {
+      console.error('Error generating dialogue:', error.message);
+      throw new Error('An error occurred while generating the podcast.');
+    }
 
 
   }
