@@ -1,4 +1,4 @@
-const { generatePodcastScript } = require('../services/podcastService');
+const { generatePodcast } = require('../services/podcastService');
 
 
 async function podcastController(req, res) {
@@ -9,9 +9,29 @@ async function podcastController(req, res) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    const script = await generatePodcastScript(topic, maleHostName, maleHostPersonality, femaleHostName, femaleHostPersonality, length);
+    const participants = [
+      {
+        Name: maleHostName,
+        Gender: "male",
+        SpeakingOrder: 1,
+        voice: "en-US-Journey-D",
+        Personality: maleHostPersonality,
+      },
+      {
+        Name: femaleHostName,
+        Gender: "female",
+        SpeakingOrder: 2,
+        voice: "en-US-Journey-F",
+        Personality: femaleHostPersonality,
+      }
+    ];
 
-    res.render('index', { script });
+    const numOfWords = 220 * length
+
+    const podcastScript = await generatePodcast(numOfWords, topic, participants);
+
+
+    res.render('index', { script: podcastScript });
 
   } catch (error) {
     console.error('Error in creating podcast script:', error.message);
