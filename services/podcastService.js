@@ -26,7 +26,17 @@ function countWordsInText(text) {
 }
 
 async function generatePodcast( numOfWords, podcastTopic, participants) {
+
+  const wordsBeforeEnding = numOfWords - 50;
+  let currentWordCount = 0;
+  let conversationHistory = [];
+  let conversationRecent = [];
+  let currentSpeakerIndex = 0;
  
+  while (currentWordCount < wordsBeforeEnding) {
+    
+  }
+
 }
 
 module.exports = { generatePodcast };
