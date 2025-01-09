@@ -37,10 +37,13 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
   while (currentWordCount < wordsBeforeEnding) {
     const currentSpeaker = participants[currentSpeakerIndex];
 
-    const promptText = `Generate a concluding response based on the conversation.
-    The podcast topic is: "${podcastTopic}".
-    The recent conversation is:\n${conversationRecent.join('\n')}\n
-    Reflect the personality of "${currentSpeaker.Personality}" in the conclusion.
+    const promptText = `
+      Generate a response for this podcast, nothing more.
+      No sound effects, just a response.
+      The podcast topic is: "${podcastTopic}".
+      The recent conversation is:\n"${conversationRecent.join('\n')}"\nIf there is no past conversation, the podcast is beginning. Generate an appropriate introduction.
+      The response should reflect the personality of "${currentSpeaker.Personality}".
+      The podcast will not conclude; the next response is based on the history given.
     `;
 
     const payload = {
@@ -84,7 +87,11 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
   for (let i = 0; i < participants.length; i++) {
     const currentSpeaker = participants[currentSpeakerIndex];
 
-    const promptText = ``;
+    const promptText = `Generate a concluding response based on the conversation.
+    The podcast topic is: "${podcastTopic}".
+    The recent conversation is:\n${conversationRecent.join('\n')}\n
+    Reflect the personality of "${currentSpeaker.Personality}" in the conclusion.
+    `;
 
     const payload = {
       contents: [
