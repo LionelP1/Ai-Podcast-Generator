@@ -1,5 +1,6 @@
 const { generatePodcastScript } = require('../services/podcastService');
 
+
 async function podcastController(req, res) {
   try {
     const { topic, maleHostName, maleHostPersonality, femaleHostName, femaleHostPersonality, length } = req.body;
@@ -17,5 +18,7 @@ async function podcastController(req, res) {
     return res.status(500).json({ error: 'Failed to generate podcast script.' });
   }
 }
+
+
 
 module.exports = podcastController;

@@ -6,13 +6,10 @@ const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({
     model: 'gemini-1.5-flash',
     generationConfig: {
-        maxOutputTokens: 800,
-        temperature: 1,
+        maxOutputTokens: 350,
+        temperature: 0.6,
     }
 });
-
-
-
 
 async function generateText(payload) {
   try {
@@ -31,4 +28,6 @@ async function generateText(payload) {
   }
 }
 
-module.exports = { generateText };
+ 
+
+module.exports = { generateText};
