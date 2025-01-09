@@ -56,8 +56,14 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
 
     try {
       //Generate dialog
+      const dialogGenerated = await generateText(payload);
 
       //Add the newly generated dialog to the history
+      conversationHistory.push(dialogGenerated);
+      if (conversationHistory.length > 0){
+        conversationRecent = conversationHistory.slice(-1);
+      }
+ 
 
       //Use modular arithmetic to get the next speaker index
 
