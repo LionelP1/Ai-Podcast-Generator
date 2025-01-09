@@ -80,6 +80,7 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
       console.error('Error generating dialogue:', error.message);
       throw new Error('An error occurred while generating the podcast.');
     }
+  }
 
   // Generate a conclusion for each participant
   for (let i = 0; i < participants.length; i++) {
@@ -99,8 +100,16 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
         }
       ],
     };
- 
 
+    try {
+      const conclusion = await generateText(payload);
+      conversationHistory.push(conclusion);
+      conversationRecent = conversationHistory.slice(-1);
+      currentSpeakerIndex = (currentSpeakerIndex + 1) % participants.length;
+    } catch (error) {
+      console.error(`Error generating conclusion`, error.message);
+      throw new Error('An error occurred while generating the conclusion');
+    }
 
 
   }
