@@ -45,6 +45,7 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
       The recent conversation is:\n"${conversationRecent.join('\n')}"\nIf there is no past conversation, the podcast is beginning. Generate an appropriate introduction.
       The response should reflect the personality of "${currentSpeaker.Personality}".
       The podcast will not conclude; the next response is based on the history given.
+      Ensure the response is natural, includes no placeholders like "[Podcast Name]" or any actual names, and matches the context of the discussion.
     `;
 
     const payload = {
