@@ -26,6 +26,7 @@ function countWordsInText(text) {
 }
 
 async function generatePodcast( numOfWords, podcastTopic, participants) {
+  participants.sort((a, b) => a.SpeakingOrder - b.SpeakingOrder);
 
   const wordsBeforeEnding = numOfWords - 50;
   let currentWordCount = 0;
@@ -34,7 +35,7 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
   let currentSpeakerIndex = 0;
  
   while (currentWordCount < wordsBeforeEnding) {
-    
+    const currentSpeaker = participants[currentSpeakerIndex];
   }
 
 }
