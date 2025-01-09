@@ -64,8 +64,9 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
         conversationRecent = conversationHistory.slice(-1);
       }
  
-
       //Use modular arithmetic to get the next speaker index
+      currentSpeakerIndex = (currentSpeakerIndex + 1) % participants.length;
+
 
       // Update word count and break if limit is exceeded
     
