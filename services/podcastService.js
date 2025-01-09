@@ -67,8 +67,10 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
       //Use modular arithmetic to get the next speaker index
       currentSpeakerIndex = (currentSpeakerIndex + 1) % participants.length;
 
-
       // Update word count and break if limit is exceeded
+      const wordsInDialog = countWordsInText(dialogGenerated);
+      if (currentWordCount + wordsInDialog > wordsBeforeEnding) break;
+      currentWordCount += wordsInDialog;
     
     } catch (error) {
       console.error('Error generating dialogue:', error.message);
