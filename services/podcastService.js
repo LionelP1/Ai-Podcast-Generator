@@ -38,8 +38,12 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
     const currentSpeaker = participants[currentSpeakerIndex];
 
     const promptText = `
-
-  `;
+      Generate a response for this podcast, nothing more.
+      The podcast topic is: "${podcastTopic}".
+      The recent conversation is:\n"${conversationRecent.join('\n')}"\nIf there is no past conversation, the podcast is beginning. Generate an appropriate introduction.
+      The response should reflect the personality of "${currentSpeaker.Personality}".
+      The podcast will not conclude; the next response is based on the history given.
+    `;
 
     const payload = {
       contents: [
@@ -79,6 +83,8 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
 
 
   }
+
+  return conversationHistory;
 
 }
 
