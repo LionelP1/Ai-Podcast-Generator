@@ -40,6 +40,7 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
     const promptText = `
       Generate a response for this podcast, nothing more.
       No sound effects, just a response.
+      Don't emphasize words like putting * around a word; just give me a normal text response with no other symbols.
       The podcast topic is: "${podcastTopic}".
       The recent conversation is:\n"${conversationRecent.join('\n')}"\nIf there is no past conversation, the podcast is beginning. Generate an appropriate introduction.
       The response should reflect the personality of "${currentSpeaker.Personality}".
