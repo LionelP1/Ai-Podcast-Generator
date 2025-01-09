@@ -81,6 +81,8 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
       throw new Error('An error occurred while generating the podcast.');
     }
 
+    // Generate a conclusion for each participant
+  for (let i = 0; i < participants.length; i++) {
 
   }
 
