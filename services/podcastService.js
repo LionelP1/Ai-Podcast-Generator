@@ -81,8 +81,27 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
       throw new Error('An error occurred while generating the podcast.');
     }
 
-    // Generate a conclusion for each participant
+  // Generate a conclusion for each participant
   for (let i = 0; i < participants.length; i++) {
+    const currentSpeaker = participants[currentSpeakerIndex];
+
+    const promptText = ``;
+
+    const payload = {
+      contents: [
+        {
+          role: 'user',
+          parts: [
+            {
+              text: promptText
+            }
+          ]
+        }
+      ],
+    };
+ 
+
+
 
   }
 
