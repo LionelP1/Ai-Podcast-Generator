@@ -36,6 +36,26 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
  
   while (currentWordCount < wordsBeforeEnding) {
     const currentSpeaker = participants[currentSpeakerIndex];
+
+    const promptText = `
+
+  `;
+
+  const payload = {
+    contents: [
+      {
+        role: 'user',
+        parts: [
+          {
+            text: promptText
+          }
+        ]
+      }
+    ],
+  };
+
+
+
   }
 
 }
