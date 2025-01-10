@@ -1,8 +1,10 @@
 const express = require('express');
-const podcastController  = require('../controllers/podcastController');
+const { generateAudio, downloadPodcast }   = require('../controllers/podcastController');
 
 const router = express.Router();
 
-router.post('/', podcastController);
+router.post('/generate-audio', generateAudio);
+
+router.post('/download-audio', downloadPodcast);
 
 module.exports = router;
