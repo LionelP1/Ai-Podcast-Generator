@@ -1,44 +1,23 @@
-const { generatePodcast } = require('../services/podcastService');
+const { convertTextToSpeech } = require('./convertTextToSpeech');
 
+async function generateAudio(req, res) {
+  const { text, voice } = req.body;
 
-async function podcastController(req, res) {
+  if (!text || !voice) {
+    return res.status(400).json({ error: 'Text and voice are required' });
+  }
+
   try {
-    const { topic, maleHostName, maleHostPersonality, femaleHostName, femaleHostPersonality, length } = req.body;
+    const audioContent = await convertTextToSpeech(text, voice);
 
-    if (!topic || !maleHostName || !femaleHostName || !length) {
-      return res.status(400).json({ error: 'Missing required fields' });
-    }
+    res.set({
+      'Content-Type': 'audio/mpeg',
+      'Content-Disposition': 'inline; filename="audio.mp3"',
+    });
 
-    const participants = [
-      {
-        Name: maleHostName,
-        Gender: "male",
-        SpeakingOrder: 1,
-        voice: "en-US-Journey-D",
-        Personality: maleHostPersonality,
-      },
-      {
-        Name: femaleHostName,
-        Gender: "female",
-        SpeakingOrder: 2,
-        voice: "en-US-Journey-F",
-        Personality: femaleHostPersonality,
-      }
-    ];
-
-    const numOfWords = 220 * length
-
-    const podcastScript = await generatePodcast(numOfWords, topic, participants);
-
-
-    res.render('index', { script: podcastScript });
-
+    res.send(audioContent);
   } catch (error) {
-    console.error('Error in creating podcast script:', error.message);
-    return res.status(500).json({ error: 'Failed to generate podcast script.' });
+    console.error('Error generating audio:', error.message);
+    res.status(500).json({ error: 'Failed to generate audio' });
   }
 }
-
-
-
-module.exports = podcastController;
