@@ -33,6 +33,7 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
   let conversationHistory = [];
   let conversationRecent = [];
   let currentSpeakerIndex = 0;
+  const dialogues = [];
  
   while (currentWordCount < wordsBeforeEnding) {
     const currentSpeaker = participants[currentSpeakerIndex];
@@ -70,6 +71,9 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
       if (conversationHistory.length > 0){
         conversationRecent = conversationHistory.slice(-1);
       }
+
+      //Add it into the dialogs array as the desired object
+      dialogues.push({ text: dialogGenerated, voice: currentSpeaker.voice });
  
       //Use modular arithmetic to get the next speaker index
       currentSpeakerIndex = (currentSpeakerIndex + 1) % participants.length;
@@ -112,17 +116,16 @@ async function generatePodcast( numOfWords, podcastTopic, participants) {
       const conclusion = await generateText(payload);
       conversationHistory.push(conclusion);
       conversationRecent = conversationHistory.slice(-1);
+
+      dialogues.push({ text: conclusion, voice: currentSpeaker.voice });
+
       currentSpeakerIndex = (currentSpeakerIndex + 1) % participants.length;
     } catch (error) {
       console.error(`Error generating conclusion`, error.message);
       throw new Error('An error occurred while generating the conclusion');
     }
-
-
   }
-
-  return conversationHistory;
-
+  return dialogues;
 }
 
 module.exports = { generatePodcast };
