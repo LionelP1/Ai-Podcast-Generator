@@ -1,48 +1,37 @@
 const { convertTextToSpeech } = require('./convertTextToSpeech');
 
-async function generateAudio(req, res) {
-  const { text, voice } = req.body;
+const fs = require('fs').promises;
+const audioCache = {};
 
-  if (!text || !voice) {
-    return res.status(400).json({ error: 'Text and voice are required' });
+async function generateAndStoreAudio(req, res) {
+  const { dialogues } = req.body;
+
+  if (!dialogues || !Array.isArray(dialogues) || dialogues.length === 0) {
+    return res.status(400).json({ error: 'Dialogues array is required' });
+  }
+
+  for (const dialogue of dialogues) {
+    if (!dialogue.text || !dialogue.voice) {
+      return res.status(400).json({ error: 'Each dialogue must have both text and voice' });
+    }
   }
 
   try {
-    const audioContent = await convertTextToSpeech(text, voice);
+    const audioContent = await processDialogues(dialogues);
 
-    res.set({
-      'Content-Type': 'audio/mpeg',
-      'Content-Disposition': 'inline; filename="audio.mp3"',
-    });
+    const audioId = uuidv4();
 
-    res.send(audioContent);
+    // Store the audio in cache
+    audioCache[audioId] = {
+      audioContent,
+      createdAt: Date.now(),
+    };
+
+    res.status(200).json({ audioId });
   } catch (error) {
     console.error('Error generating audio:', error.message);
     res.status(500).json({ error: 'Failed to generate audio' });
   }
 }
 
-
-async function downloadPodcast(req, res) {
-  const { text, voice } = req.body;
-
-  if (!text || !voice) {
-    return res.status(400).json({ error: 'Text and voice are required' });
-  }
-
-  try {
-    const audioContent = await convertTextToSpeech(text, voice);
-
-    res.set({
-      'Content-Type': 'audio/mpeg',
-      'Content-Disposition': 'attachment; filename="audio.mp3"',
-    });
-
-    res.send(audioContent);
-  } catch (error) {
-    console.error('Error generating audio:', error.message);
-    res.status(500).json({ error: 'Failed to generate audio' });
-  }
-}
-
-module.exports = { generateAudio, downloadPodcast };
+module.exports = { generateAndStoreAudio };
