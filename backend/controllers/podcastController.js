@@ -34,4 +34,20 @@ async function generateAndStoreAudio(req, res) {
   }
 }
 
-module.exports = { generateAndStoreAudio };
+async function serveAudio(req, res) {
+  const { id } = req.params;
+
+  const cachedAudio = audioCache[id];
+  if (!cachedAudio) {
+    return res.status(404).json({ error: 'Audio not found' });
+  }
+
+  res.set({
+    'Content-Type': 'audio/mpeg',
+    'Content-Disposition': `inline; filename="audio-${id}.mp3"`,
+  });
+
+  res.send(cachedAudio.audioContent);
+}
+
+module.exports = { generateAndStoreAudio, serveAudio };
