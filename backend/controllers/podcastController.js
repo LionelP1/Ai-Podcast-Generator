@@ -1,6 +1,6 @@
-const { convertTextToSpeech } = require('./convertTextToSpeech');
+const { processDialogues } = require('./convertTextToSpeech');
 
-const fs = require('fs').promises;
+const { v4: uuidv4 } = require('uuid');
 const audioCache = {};
 
 async function generateAndStoreAudio(req, res) {
@@ -50,4 +50,23 @@ async function serveAudio(req, res) {
   res.send(cachedAudio.audioContent);
 }
 
-module.exports = { generateAndStoreAudio, serveAudio };
+async function downloadAudio(req, res) {
+  const { id } = req.params;
+
+  const cachedAudio = audioCache[id];
+  if (!cachedAudio) {
+    return res.status(404).json({ error: 'Audio not found' });
+  }
+
+  res.set({
+    'Content-Type': 'audio/mpeg',
+    'Content-Disposition': `attachment; filename="audio-${id}.mp3"`,
+  });
+
+  res.send(cachedAudio.audioContent);
+}
+
+
+
+
+module.exports = { generateAndStoreAudio, serveAudio, downloadAudio };

@@ -1,14 +1,5 @@
-/* VOICES: 
-Male 1: en-US-Journey-D 
-Female 1: en-US-Journey-F
-
-Male 2: en-GB-Journey-D
-Female 2: en-GB-Journey-F
-*/
-const { v4: uuidv4 } = require('uuid');
 const fs = require('fs').promises;
 const textToSpeech = require('@google-cloud/text-to-speech');
-const audioCache = {};
 
 const client = new textToSpeech.TextToSpeechClient();
 
@@ -36,3 +27,4 @@ async function processDialogues(dialogues) {
   return Buffer.concat(audioBuffers);
 }
 
+module.exports = { convertTextToSpeech, processDialogues };
