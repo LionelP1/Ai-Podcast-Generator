@@ -1,27 +1,22 @@
+const { generatePodcast } = require('../services/podcastService');
 const { processDialogues } = require('./convertTextToSpeech');
 
 const { v4: uuidv4 } = require('uuid');
 const audioCache = {};
 
-async function generateAndStoreAudio(req, res) {
-  const { dialogues } = req.body;
+async function generatePodcastController(req, res) {
+  const { numOfWords, podcastTopic, participants } = req.body;
 
-  if (!dialogues || !Array.isArray(dialogues) || dialogues.length === 0) {
-    return res.status(400).json({ error: 'Dialogues array is required' });
-  }
-
-  for (const dialogue of dialogues) {
-    if (!dialogue.text || !dialogue.voice) {
-      return res.status(400).json({ error: 'Each dialogue must have both text and voice' });
-    }
+  if (!numOfWords || !podcastTopic || !participants || !Array.isArray(participants) || participants.length === 0) {
+    return res.status(400).json({ error: 'Please provide numOfWords, podcastTopic, and participants' });
   }
 
   try {
+    const dialogues = await generatePodcast(numOfWords, podcastTopic, participants);
+
     const audioContent = await processDialogues(dialogues);
 
     const audioId = uuidv4();
-
-    // Store the audio in cache
     audioCache[audioId] = {
       audioContent,
       createdAt: Date.now(),
@@ -29,8 +24,8 @@ async function generateAndStoreAudio(req, res) {
 
     res.status(200).json({ audioId });
   } catch (error) {
-    console.error('Error generating audio:', error.message);
-    res.status(500).json({ error: 'Failed to generate audio' });
+    console.error('Error generating podcast:', error.message);
+    res.status(500).json({ error: 'Failed to generate podcast' });
   }
 }
 
@@ -69,4 +64,4 @@ async function downloadAudio(req, res) {
 
 
 
-module.exports = { generateAndStoreAudio, serveAudio, downloadAudio };
+module.exports = { generatePodcastController, serveAudio, downloadAudio };
