@@ -3,39 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generate Podcast Script</title>
+  <title>Podcast Generator</title>
 </head>
 <body>
-  <h1>Generate Podcast Script</h1>
 
-  <form action="/api/podcast" method="POST" id="podcastForm">
-    <label for="topic">Topic of Podcast:</label>
-    <input type="text" id="topic" name="topic" required>
+  <h1>Podcast Generator</h1>
+  <form action="/api/podcast/generate" method="POST">
+    <div class="input-group">
+      <label for="numOfWords">Number of Words:</label>
+      <input type="number" id="numOfWords" name="numOfWords" required>
+    </div>
 
-    <label for="maleHostName">Male Host Name:</label>
-    <input type="text" id="maleHostName" name="maleHostName" required>
+    <div class="input-group">
+      <label for="podcastTopic">Podcast Topic:</label>
+      <input type="text" id="podcastTopic" name="podcastTopic" required>
+    </div>
 
-    <label for="maleHostPersonality">Male Host Personality:</label>
-    <input type="text" id="maleHostPersonality" name="maleHostPersonality" required>
+    <div class="input-group">
+      <label for="participants">Participants:</label>
+      <textarea id="participants" name="participants" rows="5" required>
+      [
+        { "Name": "Bob", "Gender": "male", "SpeakingOrder": 1, "voice": "en-US-Journey-D", "Personality": "Funny" },
+        { "Name": "Alice", "Gender": "female", "SpeakingOrder": 2, "voice": "en-US-Journey-F", "Personality": "Professional" }
+      ]
+      </textarea>
+    </div>
 
-    <label for="femaleHostName">Female Host Name:</label>
-    <input type="text" id="femaleHostName" name="femaleHostName" required>
-
-    <label for="femaleHostPersonality">Female Host Personality:</label>
-    <input type="text" id="femaleHostPersonality" name="femaleHostPersonality" required>
-
-    <label for="length">Length of Podcast (in minutes):</label>
-    <input type="number" id="length" name="length" required min="1">
-
-    <button type="submit">Generate Script</button>
+    <button type="submit">Generate Podcast</button>
   </form>
 
-  <% if (script) { %>
-    <div id="podcast-script">
-      <h3>Generated Podcast Script</h3>
-      <pre><%= script %></pre>
-    </div>
+  <% if (audioId) { %>
+    <h2>Podcast Generated!</h2>
+    <audio controls>
+      <source src="/api/podcast/audio/<%= audioId %>" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <br>
+    <a href="/api/podcast/audio/<%= audioId %>/download" download>Download Podcast</a>
   <% } %>
 
 </body>
 </html>
+

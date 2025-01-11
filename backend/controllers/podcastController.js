@@ -1,11 +1,14 @@
 const { generatePodcast } = require('../services/podcastService');
-const { processDialogues } = require('./convertTextToSpeech');
+const { processDialogues } = require('../services/textToSpeechService');
 
 const { v4: uuidv4 } = require('uuid');
 const audioCache = {};
 
 async function generatePodcastController(req, res) {
-  const { numOfWords, podcastTopic, participants } = req.body;
+  let { numOfWords, podcastTopic, participants } = req.body;
+
+  participants = JSON.parse(participants.trim());
+  numOfWords = Number(numOfWords);
 
   if (!numOfWords || !podcastTopic || !participants || !Array.isArray(participants) || participants.length === 0) {
     return res.status(400).json({ error: 'Please provide numOfWords, podcastTopic, and participants' });
@@ -22,7 +25,8 @@ async function generatePodcastController(req, res) {
       createdAt: Date.now(),
     };
 
-    res.status(200).json({ audioId });
+    // res.status(200).json({ audioId });
+    res.render('index', { audioId }); //Change later
   } catch (error) {
     console.error('Error generating podcast:', error.message);
     res.status(500).json({ error: 'Failed to generate podcast' });
