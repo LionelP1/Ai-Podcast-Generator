@@ -5,6 +5,8 @@ const { v4: uuidv4 } = require('uuid');
 const audioCache = {};
 
 async function generatePodcastController(req, res) {
+  console.log("Request body:", req.body);
+  console.log("hi");
   const {
     podcastTopic,
     maleHostName,
@@ -14,7 +16,7 @@ async function generatePodcastController(req, res) {
     length,
   } = req.body;
 
-  const numOfWords = parseInt(length, 10) * 100;
+  const numOfWords = parseInt(length, 10) * 150;
 
   const participants = [
     {
@@ -44,8 +46,7 @@ async function generatePodcastController(req, res) {
       createdAt: Date.now(),
     };
 
-    // res.status(200).json({ audioId });
-    res.render('index', { audioId }); //Change later
+    res.status(200).json({ audioId });
   } catch (error) {
     console.error('Error generating podcast:', error.message);
     res.status(500).json({ error: 'Failed to generate podcast' });
