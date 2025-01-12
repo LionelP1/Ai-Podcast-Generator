@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
+
 const PodcastGenerator = () => {
-  
   const [formData, setFormData] = useState({
     maleHostName: "",
     maleHostPersonality: "",
@@ -9,7 +9,7 @@ const PodcastGenerator = () => {
     femaleHostPersonality: "",
     length: "",
     podcastTopic: "",
-  });
+ });
 
   const [audioId, setAudioId] = useState(null);
 
@@ -21,14 +21,18 @@ const PodcastGenerator = () => {
     });
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("hi")
+    console.log(formData);
     try {
       const response = await fetch("/api/podcast/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({formData}),
       });
+
       const data = await response.json();
       if (data.audioId) {
         setAudioId(data.audioId);
@@ -37,6 +41,7 @@ const PodcastGenerator = () => {
       console.error("Error generating podcast:", error);
     }
   };
+
 
   return (
     <div>
@@ -112,6 +117,7 @@ const PodcastGenerator = () => {
         <button type="submit">Generate Podcast</button>
       </form>
 
+
       {audioId && (
         <div>
           <h2>Podcast Generated!</h2>
@@ -131,4 +137,8 @@ const PodcastGenerator = () => {
   );
 };
 
+
 export default PodcastGenerator;
+
+
+
