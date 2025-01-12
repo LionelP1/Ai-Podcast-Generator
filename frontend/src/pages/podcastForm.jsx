@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const PodcastGenerator = () => {
-
+  
   const [formData, setFormData] = useState({
     maleHostName: "",
     maleHostPersonality: "",
@@ -14,11 +14,28 @@ const PodcastGenerator = () => {
   const [audioId, setAudioId] = useState(null);
 
   const handleChange = (e) => {
-
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   const handleSubmit = async (e) => {
-
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/podcast/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (data.audioId) {
+        setAudioId(data.audioId);
+      }
+    } catch (error) {
+      console.error("Error generating podcast:", error);
+    }
   };
 
   return (
@@ -105,7 +122,6 @@ const PodcastGenerator = () => {
             />
             Your browser does not support the audio element.
           </audio>
-          <br />
           <a href={`/api/podcast/audio/${audioId}/download`} download>
             Download Podcast
           </a>
