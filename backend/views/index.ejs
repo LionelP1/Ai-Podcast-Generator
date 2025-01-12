@@ -9,24 +9,33 @@
 
   <h1>Podcast Generator</h1>
   <form action="/api/podcast/generate" method="POST">
+
     <div class="input-group">
-      <label for="numOfWords">Number of Words:</label>
-      <input type="number" id="numOfWords" name="numOfWords" required>
+      <label for="maleHostName">Male Host Name:</label>
+      <input type="text" id="maleHostName" name="maleHostName" required>
+    </div>
+    <div class="input-group">
+      <label for="maleHostPersonality">Male Host Personality:</label>
+      <input type="text" id="maleHostPersonality" name="maleHostPersonality" required>
+    </div>
+
+    <div class="input-group">
+      <label for="femaleHostName">Female Host Name:</label>
+      <input type="text" id="femaleHostName" name="femaleHostName" required>
+    </div>
+    <div class="input-group">
+      <label for="femaleHostPersonality">Female Host Personality:</label>
+      <input type="text" id="femaleHostPersonality" name="femaleHostPersonality" required>
+    </div>
+
+    <div class="input-group">
+      <label for="length">Length of Podcast (in minutes):</label>
+      <input type="number" id="length" name="length" required min="1">
     </div>
 
     <div class="input-group">
       <label for="podcastTopic">Podcast Topic:</label>
       <input type="text" id="podcastTopic" name="podcastTopic" required>
-    </div>
-
-    <div class="input-group">
-      <label for="participants">Participants:</label>
-      <textarea id="participants" name="participants" rows="5" required>
-      [
-        { "Name": "Bob", "Gender": "male", "SpeakingOrder": 1, "voice": "en-US-Journey-D", "Personality": "Funny" },
-        { "Name": "Alice", "Gender": "female", "SpeakingOrder": 2, "voice": "en-US-Journey-F", "Personality": "Professional" }
-      ]
-      </textarea>
     </div>
 
     <button type="submit">Generate Podcast</button>

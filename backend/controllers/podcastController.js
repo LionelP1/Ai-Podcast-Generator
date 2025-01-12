@@ -5,14 +5,33 @@ const { v4: uuidv4 } = require('uuid');
 const audioCache = {};
 
 async function generatePodcastController(req, res) {
-  let { numOfWords, podcastTopic, participants } = req.body;
+  const {
+    podcastTopic,
+    maleHostName,
+    maleHostPersonality,
+    femaleHostName,
+    femaleHostPersonality,
+    length,
+  } = req.body;
 
-  participants = JSON.parse(participants.trim());
-  numOfWords = Number(numOfWords);
+  const numOfWords = parseInt(length, 10) * 100;
 
-  if (!numOfWords || !podcastTopic || !participants || !Array.isArray(participants) || participants.length === 0) {
-    return res.status(400).json({ error: 'Please provide numOfWords, podcastTopic, and participants' });
-  }
+  const participants = [
+    {
+      Name: maleHostName,
+      Gender: 'male',
+      SpeakingOrder: 1,
+      voice: 'en-US-Journey-D',
+      Personality: maleHostPersonality,
+    },
+    {
+      Name: femaleHostName,
+      Gender: 'female',
+      SpeakingOrder: 2,
+      voice: 'en-US-Journey-F',
+      Personality: femaleHostPersonality,
+    },
+  ];
 
   try {
     const dialogues = await generatePodcast(numOfWords, podcastTopic, participants);
@@ -64,8 +83,5 @@ async function downloadAudio(req, res) {
 
   res.send(cachedAudio.audioContent);
 }
-
-
-
 
 module.exports = { generatePodcastController, serveAudio, downloadAudio };
