@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "build": "npm --prefix ./frontend run build",
+    "start": "node backend/app.js"
+  },
   "dependencies": {
     "@google-cloud/text-to-speech": "^5.7.0",
     "@google/generative-ai": "^0.21.0",
@@ -10,8 +14,6 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
-    "daisyui": "^4.12.23",
-    "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.17"
+    "postcss": "^8.4.49"
   }
 }
