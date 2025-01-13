@@ -12,6 +12,7 @@ const PodcastGenerator = () => {
  });
 
   const [audioId, setAudioId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,11 +22,9 @@ const PodcastGenerator = () => {
     });
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("hi")
-    console.log(formData);
+    setIsLoading(true);
     try {
       const response = await fetch("/api/podcast/generate", {
         method: "POST",
@@ -39,6 +38,8 @@ const PodcastGenerator = () => {
       }
     } catch (error) {
       console.error("Error generating podcast:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -117,6 +118,7 @@ const PodcastGenerator = () => {
         <button type="submit">Generate Podcast</button>
       </form>
 
+      {isLoading && <p>Podcast is loading...</p>}
 
       {audioId && (
         <div>

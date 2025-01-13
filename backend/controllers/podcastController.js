@@ -5,8 +5,6 @@ const { v4: uuidv4 } = require('uuid');
 const audioCache = {};
 
 async function generatePodcastController(req, res) {
-  console.log("Request body:", req.body);
-  console.log("hi");
   const {
     podcastTopic,
     maleHostName,
