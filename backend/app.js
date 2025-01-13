@@ -1,4 +1,4 @@
-// require('dotenv').config(); For deployment
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 
@@ -15,7 +15,7 @@ const podcastRoutes = require('./routes/podcastRoute');
 app.use('/api/podcast', podcastRoutes);
 
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "build", "index.html"));
+	res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
 });
 
 
