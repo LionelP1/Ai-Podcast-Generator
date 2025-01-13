@@ -110,7 +110,7 @@ const PodcastGenerator = () => {
 
           <div className="mb-4">
             <label className="label">
-              <span className="text-sm font-medium text-gray-400">Length (Minutes)</span>
+              <span className="text-sm font-medium text-gray-400">Duration (Minutes)</span>
             </label>
             <input
               type="number"
@@ -122,6 +122,9 @@ const PodcastGenerator = () => {
               min="1"
               max="3"
             />
+              <span className="text-xs text-gray-500 mt-1 block">
+                Note: The duration is an estimate and may vary.
+              </span>
           </div>
 
           <div className="mb-6">
