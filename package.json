@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "build": "npm --prefix ./frontend install && npm --prefix ./frontend run build",
-    "start": "node backend/app.js"
+    "start": "node backend/app.js",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "dependencies": {
     "@google-cloud/text-to-speech": "^5.7.0",
