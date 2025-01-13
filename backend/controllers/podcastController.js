@@ -16,7 +16,7 @@ async function generatePodcastController(req, res) {
     length,
   } = req.body.formData;
 
-  const numOfWords = parseInt(length, 10) * 180;
+  const numOfWords = parseInt(length, 10) * 120;
   console.log(numOfWords);
 
   const participants = [
