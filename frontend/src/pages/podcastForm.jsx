@@ -24,11 +24,13 @@ const PodcastGenerator = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setAudioId(null);
+
     try {
       const response = await fetch("/api/podcast/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ formData }),
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();
@@ -151,7 +153,7 @@ const PodcastGenerator = () => {
 
         {isLoading && (
           <div className="mt-4 text-center text-gray-400 animate-pulse">
-            Podcast is loading...
+            Podcast is generating...
           </div>
         )}
 
