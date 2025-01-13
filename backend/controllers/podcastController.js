@@ -5,7 +5,6 @@ const { v4: uuidv4 } = require('uuid');
 const audioCache = {};
 
 async function generatePodcastController(req, res) {
-  console.log("Request body:", req.body);
 
   const {
     podcastTopic,
@@ -14,10 +13,9 @@ async function generatePodcastController(req, res) {
     femaleHostName,
     femaleHostPersonality,
     length,
-  } = req.body.formData;
+  } = req.body;
 
-  const numOfWords = parseInt(length, 10) * 120;
-  console.log(numOfWords);
+  const numOfWords = parseInt(length, 10) * 110;
 
   const participants = [
     {
