@@ -1,7 +1,7 @@
 # AI Podcast Generator 🎙️
 
 ## Project Description
-The AI Podcast Generator is a web application that leverages **Gemini AI** for script creation and **Google TTS** for audio generation. Simply provide a topic or script, and the app will generate an audio file, enabling you to produce podcasts quickly and efficiently. This solution removes the need for traditional recording and editing, making podcast creation more accessible.
+The AI Podcast Generator is a web application that leverages **Gemini AI** for script creation and **Google TTS** for audio generation. Simply provide a topic, and the app will generate an audio file, enabling you to produce podcasts quickly and efficiently. This solution removes the need for traditional recording and editing, making podcast creation more accessible.
 
 ## Live Demo
 [AI Podcast Generator Live Demo](https://ai-podcast-generator-9ai4.onrender.com)
