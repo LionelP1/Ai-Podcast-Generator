@@ -5,6 +5,7 @@ The AI Podcast Generator is a web application that leverages **Gemini AI** for s
 
 ## Live Demo
 [AI Podcast Generator Live Demo](https://ai-podcast-generator-production.up.railway.app)
+<a href="https://ai-podcast-generator-production.up.railway.app" target="_blank" rel="noopener noreferrer">AI Podcast Generator Live Demo</a>
 
 
 ## Features
